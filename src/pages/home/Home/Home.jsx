@@ -7,10 +7,18 @@ import Recommends from '../recommends/Recommends';
 import Featured from '../featured/Featured';
 import Testimonials from '../testimonials/testimonials';
 import Team from '../team/Team';
+import HelmetTittle from '../../shared/Helmet/HelmetTittle';
 
 const Home = () => {
     return (
         <div>
+            <section>
+                <HelmetTittle
+                    tittle="Social|Home = () => 
+                        {"metaName="description"
+                    desContent="Oder the delicious food ." />
+
+            </section>
             <TopBanner></TopBanner>
             <CategoryList></CategoryList>
 

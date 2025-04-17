@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 import SectionTitle from '../../shared/sectionTittle/SectionTittle';
 import PopularItem from '../../shared/PopularItems/PopularItem';
+import UseMenu from '../../../hooks/useMenu/UseMenu';
 
 const PopularCard = () => {
-    const [popular, setPopular] = useState([]);
+    const [data] = UseMenu();
+    const popular = data.filter(item => item.category === 'popular');
 
-    useEffect(() => {
-        fetch('popularMenuApi.json')
-            .then(res => res.json())
-            .then(data => {
-                const popularItems = data.filter(item => item.category === 'popular');
-                setPopular(popularItems);
-            });
-    }, []);
 
     return (
         <div className="py-16 bg-white">
             {/* Section title */}
             <SectionTitle
                 subHeading="Popular Items"
-                heading="From Our Menu"
-            />
+                heading="From Our Menu" />
 
             {/* Card grid */}
+            
             <div className="grid md:grid-cols-2 gap-10">
                 {
                     popular.map(item => <PopularItem

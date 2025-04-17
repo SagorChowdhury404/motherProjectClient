@@ -5,11 +5,10 @@ const Navbar = () => {
     // const { user, setUser } = useState('sagor')
     const navTittle = <>
 
-        <li><a>Item 1</a></li>
-        <li><a>Item 2</a></li>
-        <li><a>Item 3</a></li>
-        <li><a>Item 4</a></li>
-        <li><a>Item 5</a></li>
+        <li><a> <Link to='/'> Home</Link> </a></li>
+        <li><a> <Link to='/menu'> Menu</Link>  </a></li>
+        <li><a>  <Link to='/ourShop'> Our shop </Link></a></li>
+        <li><a> <Link to='/contact'> Contact us </Link> </a></li>
     </>
     return (
         <div className="navbar fixed z-10 bg-black shadow-sm bg-opacity-30 text-white ">
@@ -26,10 +25,10 @@ const Navbar = () => {
                         }
                     </ul>
                 </div>
-                <a className="btn  text-xl">daisyUI</a>
+                <a className="btn  text-xl bg-yellow-400 text-black ">Social Tourist Restaurant</a>
             </div>
             <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
+                <ul className="menu menu-horizontal px-1 text-xl">
 
                     {
                         navTittle
