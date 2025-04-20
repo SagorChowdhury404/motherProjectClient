@@ -5,10 +5,13 @@ import { Outlet } from 'react-router-dom';
 
 const MainLayouts = () => {
     return (
-        <div className='max-w-screen-x mx-auto'>
+        <div >
             <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
+            <div className='max-w-screen-x mx-auto'>
+                <Outlet></Outlet>
+                <Footer></Footer>
+            </div>
+
 
         </div>
     );

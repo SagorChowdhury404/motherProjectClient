@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const BuyCard = ({ item }) => {
     return (
@@ -15,12 +16,14 @@ const BuyCard = ({ item }) => {
                         <p className="text-gray-600 text-sm">{item.recipe}</p>
                         <div className="flex justify-between items-center">
                             <p className="text-lg font-semibold text-green-600">${item.price}</p>
-                            <button
-                                type="button"
-                                className="px-4 py-2 text-white bg-blue-700 hover:bg-blue-800 rounded-lg transition"
-                            >
-                                Order Now
-                            </button>
+                            <Link to={`/order/${item._id} `}>
+                                <button
+                                    type="button"
+                                    className="px-4 py-2 text-white bg-blue-700 hover:bg-blue-800 rounded-lg transition"
+                                >
+                                    Order Now
+                                </button></Link>
+
                         </div>
                     </div>
                 </div>

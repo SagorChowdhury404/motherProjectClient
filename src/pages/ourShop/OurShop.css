@@ -1,0 +1,7 @@
+.tab-btn {
+    @apply px-5 py-2 text-lg cursor-pointer border border-transparent hover:border-yellow-400 rounded transition;
+  }
+  
+  .react-tabs__tab--selected {
+    @apply border-yellow-400 bg-yellow-100 font-semibold text-black;
+  }
