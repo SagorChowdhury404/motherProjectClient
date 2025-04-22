@@ -11,6 +11,7 @@ import dessertImg from '../../../assets/menu/dessert-bg.jpeg'
 import soupImg from '../../../assets/menu/soup-bg.jpg'
 import pizzaImg from '../../../assets/menu/pizza-bg.jpg'
 import saladImg from '../../../assets/menu/salad-bg.jpg'
+import ViewFullMenu from '../../shared/viewFullMenu/ViewFullMenu';
 
 
 const Menu = () => {
@@ -44,9 +45,7 @@ const Menu = () => {
                         ></PopularItem>)
                     }
                 </div>
-                <div className="text-center">
-                    <button className="btn btn-outline border-0 border-b-4 mt-4">View Full Menu</button>
-                </div>
+                < ViewFullMenu></ViewFullMenu>
             </section>
 
             {/* dessert section  */}
@@ -61,9 +60,7 @@ const Menu = () => {
                         ></PopularItem>)
                     }
                 </div>
-                <div className="text-center">
-                    <button className="btn btn-outline border-0 border-b-4 mt-4">View Full Menu</button>
-                </div>
+                < ViewFullMenu></ViewFullMenu>
             </section>
 
             {/* soup section  */}
@@ -78,9 +75,7 @@ const Menu = () => {
                         ></PopularItem>)
                     }
                 </div>
-                <div className="text-center">
-                    <button className="btn btn-outline border-0 border-b-4 mt-4">View Full Menu</button>
-                </div>
+                < ViewFullMenu></ViewFullMenu>
             </section>
 
             {/* pizza section  */}
@@ -95,9 +90,7 @@ const Menu = () => {
                         ></PopularItem>)
                     }
                 </div>
-                <div className="text-center">
-                    <button className="btn btn-outline border-0 border-b-4 mt-4">View Full Menu</button>
-                </div>
+                < ViewFullMenu></ViewFullMenu>
             </section>
 
             {/* salad section  */}
@@ -112,9 +105,7 @@ const Menu = () => {
                         ></PopularItem>)
                     }
                 </div>
-                <div className="text-center">
-                    <button className="btn btn-outline border-0 border-b-4 mt-4">View Full Menu</button>
-                </div>
+                <ViewFullMenu></ViewFullMenu>
             </section>
 
 

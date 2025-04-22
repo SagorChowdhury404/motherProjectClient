@@ -1,0 +1,20 @@
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: black !important;
+    /* border: 1px solid #dbd1d3; */
+    border-radius: 8px;
+    width: full;
+    padding: 2px;
+}
+
+
+canvas {
+    background-color: #f0f0f0 !important;
+    border-radius: 6px;
+    padding: 4px;
+    width: 100% !important;
+    height: 50px !important;
+    
+  }
+ 
+  

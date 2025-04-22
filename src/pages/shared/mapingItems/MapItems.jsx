@@ -1,5 +1,5 @@
 import React from 'react';
-import BuyCard from '../buyCard/buyCard';
+import BuyCard from '../buyCard/BuyCard';
 
 const MapItems = ({ items }) => {
     return (

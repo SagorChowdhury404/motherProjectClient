@@ -5,7 +5,7 @@ const UseMenu = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('popularMenuApi.json')
+        fetch('http://localhost:5000/menu')
             .then(res => res.json())
             .then(data => {
                 setData(data);

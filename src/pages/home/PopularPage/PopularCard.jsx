@@ -2,6 +2,7 @@
 import SectionTitle from '../../shared/sectionTittle/SectionTittle';
 import PopularItem from '../../shared/PopularItems/PopularItem';
 import UseMenu from '../../../hooks/useMenu/UseMenu';
+import { Link } from 'react-router-dom';
 
 const PopularCard = () => {
     const [data] = UseMenu();
@@ -26,7 +27,7 @@ const PopularCard = () => {
                 }
             </div>
             <div className="text-center">
-                <button className="btn btn-outline border-0 border-b-4 mt-4">View Full Menu</button>
+                <Link to='/ourShop'> <button className="btn btn-outline border-0 border-b-4 mt-4">View Full Menu</button></Link>
             </div>
 
         </div>
