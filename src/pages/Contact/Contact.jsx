@@ -3,13 +3,18 @@ import { useForm } from 'react-hook-form';
 import HelmetTittle from '../shared/Helmet/HelmetTittle';
 import SectionTitle from '../shared/sectionTittle/SectionTittle';
 import Cover from '../shared/cover/Cover';
+import Swal from 'sweetalert2';
 // import contractImg from '../../assets/home/banner.jpg'
 const Contact = () => {
     const { register, handleSubmit, reset } = useForm();
 
     const onSubmit = (data) => {
         console.log(data);
-
+        Swal.fire({
+            title: "Contact for message successfully ",
+            icon: "success",
+            draggable: true
+          });
 
 
         reset();

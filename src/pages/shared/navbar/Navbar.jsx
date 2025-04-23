@@ -15,6 +15,7 @@ const Navbar = () => {
       <li><Link to="/menu">Menu</Link></li>
       <li><Link to="/ourShop">Our Shop</Link></li>
       <li><Link to="/contact">Contact Us</Link></li>
+      <li ><a className=""> <Link to='/dashboard'> Dashboard  </Link> </a></li>
     </>
   );
 
@@ -22,7 +23,7 @@ const Navbar = () => {
     <div className="lg:fixed lg:top-0 w-full z-50 shadow-md bg-black bg-opacity-30 text-white">
       <div className="max-w-screen-xl mx-auto px-4">
         <div className="navbar py-2">
-          
+
           {/* Navbar Start (Logo + Dropdown for Mobile) */}
           <div className="navbar-start">
             <div className="dropdown">
@@ -67,7 +68,7 @@ const Navbar = () => {
                     </div>
                   </div>
                   <li><a className="text-black">Profile</a></li>
-                  <li><a className="text-black">Dashboard</a></li>
+                  <li ><a className="text-black"> <Link to='/dashboard'> Dashboard  </Link> </a></li>
                   <li><a className="text-black">Settings</a></li>
                   <li>
                     <button onClick={handleLogout} className="w-full bg-red-500 text-white py-2 rounded mt-2 hover:bg-red-600 ">

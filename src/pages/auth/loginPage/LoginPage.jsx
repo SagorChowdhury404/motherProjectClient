@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaUser, FaLock, FaEyeSlash, FaEye } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Lottie from 'lottie-react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import loginAnimation from '../../../assets/others/Animation login2.json';
 import loginBgImg from '../../../assets/others/loginBgImg/authentication.png';
 import './LOginPage.css';
+import { AuthContext } from '../../../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 export default function LoginPage() {
+    const { signIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
     const [showPassword, setShowPassword] = useState(false);
     const [captcha, setCaptcha] = useState("");
     const [isCaptchaValid, setIsCaptchaValid] = useState(false);
@@ -37,13 +44,26 @@ export default function LoginPage() {
         setErrors(validationErrors);
 
 
-        
+
         if (Object.keys(validationErrors).length === 0) {
             console.log("Logged In!", data);
 
+            // --- createUser for firebase authentication 
+            signIn(data.email, data.password)
+                .then(result => {
+                    console.log(result.user)
+                    // alert("Account created successfully!");
+                    Swal.fire({
+                        title: "User login successfully",
+                        icon: "success",
+                        draggable: true
 
-
-
+                    });
+                    navigate(from, { replace: true });
+                })
+                .catch(error => {
+                    console.log(error.message)
+                })
 
 
 

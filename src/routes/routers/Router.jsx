@@ -6,6 +6,8 @@ import OurShop from "../../pages/ourShop/OurShop";
 import Contact from "../../pages/Contact/Contact";
 import LoginPage from "../../pages/auth/loginPage/LoginPage";
 import RegisterPage from "../../pages/auth/registationPage/RegisterPage";
+import DashboardLayout from "../../layouts/DashboardLayout/DashboardLayout";
+import PrivetRouter from "../privetRouter/PrivetRouter";
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +41,13 @@ export const router = createBrowserRouter([
             {
                 path: "/register",
                 element: <RegisterPage></RegisterPage>,
+            },
+            // Protected Route 
+            {
+                path: "/dashboard",
+                element: <PrivetRouter>
+                    <DashboardLayout ></DashboardLayout>
+                </PrivetRouter>
             },
 
         ]

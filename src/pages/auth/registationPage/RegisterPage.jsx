@@ -7,6 +7,7 @@ import Lottie from "lottie-react";
 import loginBgImg from "../../../assets/others/loginBgImg/authentication.png";
 import loginAnimation from "../../../assets/others/AnimationSignIn.json";
 import { AuthContext } from "../../../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 export default function RegisterPage() {
     const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
@@ -24,7 +25,11 @@ export default function RegisterPage() {
         .then(result => {
             console.log(result.user)
             // alert("Account created successfully!");
-
+            Swal.fire({
+                title: "Register successfully",
+                icon: "success",
+                draggable: true
+              });
         })
         .catch(error => {
             console.log(error.message)
