@@ -1,8 +1,15 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../provider/AuthProvider';
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
 
-  const navTittle = (
+  const handleLogout = () => {
+    logOut();
+  };
+
+  const navLinks = (
     <>
       <li><Link to="/">Home</Link></li>
       <li><Link to="/menu">Menu</Link></li>
@@ -12,65 +19,68 @@ const Navbar = () => {
   );
 
   return (
-    <div className="lg:fixed lg:top-0 lg:left-0 w-full z-50 shadow-sm text-white">
-  <div className="max-w-screen-xl mx-auto px-2 bg-black bg-opacity-30">
-        <div className="navbar ">
-          {/* Navbar Start */}
+    <div className="lg:fixed lg:top-0 w-full z-50 shadow-md bg-black bg-opacity-30 text-white">
+      <div className="max-w-screen-xl mx-auto px-4">
+        <div className="navbar py-2">
+          
+          {/* Navbar Start (Logo + Dropdown for Mobile) */}
           <div className="navbar-start">
             <div className="dropdown">
-              <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <button tabIndex={0} className="btn btn-ghost lg:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
                 </svg>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-white text-black rounded-box w-52 z-10"
-              >
-                {navTittle}
+              </button>
+              <ul className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-white text-black rounded-box w-52 z-10">
+                {navLinks}
               </ul>
             </div>
-            <Link className="btn bg-yellow-400 text-black text-xl">Social Tourist Restaurant</Link>
+            <Link to="/" className="btn bg-yellow-400 text-black text-xl normal-case">Social Tourist Restaurant</Link>
           </div>
 
           {/* Navbar Center */}
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1 text-xl">
-              {navTittle}
+              {navLinks}
             </ul>
           </div>
 
-          {/* Navbar End */}
-          <div className="navbar-end flex gap-3">
-            {/* Profile Dropdown */}
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full bg-white">
-                  <img src={''} alt="profile" />
-                </div>
+          {/* Navbar End (Auth Buttons) */}
+          <div className="navbar-end flex items-center gap-3">
+            {user ? (
+              <div className="dropdown dropdown-end">
+                <button tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img src={user?.photoURL || 'https://i.ibb.co/ZYW3VTp/brown-brim.png'} alt="User Avatar" />
+                  </div>
+                </button>
+                <ul className="menu menu-sm dropdown-content mt-3 p-3 bg-white shadow rounded-box w-64 z-20">
+                  <div className="flex items-center gap-3 mb-2 border-b pb-3">
+                    <div className="avatar">
+                      <div className="w-12 rounded-full">
+                        <img src={user?.photoURL || 'https://i.ibb.co/ZYW3VTp/brown-brim.png'} alt="User Avatar" />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-lg font-semibold text-black">{user?.displayName || 'User'}</p>
+                      {/* <p className="text-sm text-gray-500">{user?.email}</p> */}
+                    </div>
+                  </div>
+                  <li><a className="text-black">Profile</a></li>
+                  <li><a className="text-black">Dashboard</a></li>
+                  <li><a className="text-black">Settings</a></li>
+                  <li>
+                    <button onClick={handleLogout} className="w-full bg-red-500 text-white py-2 rounded mt-2 hover:bg-red-600 ">
+                      Logout
+                    </button>
+                  </li>
+                </ul>
               </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-white text-black rounded-box mt-3 p-2 shadow w-52 z-10"
-              >
-                <div className="flex items-center p-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 mr-3"></div>
-                  <h1 className="font-bold text-lg">Sagor Chowdhury</h1>
-                </div>
-                <hr />
-                <li><Link className="text-lg font-semibold hover:bg-gray-200 p-2 rounded" to="/MyApplication">My Application</Link></li>
-                <li><a className="text-lg font-semibold hover:bg-gray-200 p-2 rounded">Settings</a></li>
-                <hr />
-                <li className="flex justify-center">
-                  <button className="my-3 w-full max-w-[200px] text-black font-semibold bg-red-500 text-lg py-2 rounded">Logout</button>
-                </li>
-              </ul>
-            </div>
-
-            {/* Login Button */}
-            <Link to="/login">
-              <button className="btn bg-blue-600 text-white text-lg">Login</button>
-            </Link>
+            ) : (
+              <Link to="/login">
+                <button className="btn bg-blue-600 hover:bg-blue-700 text-white text-lg">Login</button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

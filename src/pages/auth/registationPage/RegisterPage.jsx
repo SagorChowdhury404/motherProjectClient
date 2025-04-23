@@ -1,19 +1,34 @@
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUser, FaPhone, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
 import loginBgImg from "../../../assets/others/loginBgImg/authentication.png";
 import loginAnimation from "../../../assets/others/AnimationSignIn.json";
+import { AuthContext } from "../../../provider/AuthProvider";
 
 export default function RegisterPage() {
     const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    const { createUser } = useContext(AuthContext);
+
+
+
     const onSubmit = (data) => {
         console.log("Registration Data:", data);
+        // --- createUser for firebase authentication 
+        createUser(data.email, data.password)
+        .then(result => {
+            console.log(result.user)
+            // alert("Account created successfully!");
+
+        })
+        .catch(error => {
+            console.log(error.message)
+        })
         reset();
     };
 
