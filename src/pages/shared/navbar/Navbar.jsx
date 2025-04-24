@@ -1,13 +1,24 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../provider/AuthProvider';
-
+import { FaCartPlus } from "react-icons/fa6";
+import UseCart from '../../../hooks/useCart/UseCart';
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [cart] = UseCart();
 
   const handleLogout = () => {
-    logOut();
+    console.log('logout')
+    logOut()
+      .then(() => {
+        console.log("User logged out");
+        // Optionally redirect or toast
+      })
+      .catch(error => {
+        console.error("Logout error:", error);
+      });
   };
+
 
   const navLinks = (
     <>
@@ -15,12 +26,13 @@ const Navbar = () => {
       <li><Link to="/menu">Menu</Link></li>
       <li><Link to="/ourShop">Our Shop</Link></li>
       <li><Link to="/contact">Contact Us</Link></li>
-      <li ><a className=""> <Link to='/dashboard'> Dashboard  </Link> </a></li>
+      {/* <li ><a className=""> <Link to='/dashboard'> Dashboard  </Link> </a></li> */}
     </>
   );
 
   return (
-    <div className="lg:fixed lg:top-0 w-full z-50 shadow-md bg-black bg-opacity-30 text-white">
+    <div className=" w-full z-50 shadow-md bg-black bg-opacity-35 text-white">
+
       <div className="max-w-screen-xl mx-auto px-4">
         <div className="navbar py-2">
 
@@ -36,7 +48,13 @@ const Navbar = () => {
                 {navLinks}
               </ul>
             </div>
-            <Link to="/" className="btn bg-yellow-400 text-black text-xl normal-case">Social Tourist Restaurant</Link>
+            <Link
+              to="/"
+              className="hidden md:inline-block btn bg-yellow-400 text-black text-xl normal-case"
+            >
+              Social Tourist Restaurant
+            </Link>
+
           </div>
 
           {/* Navbar Center */}
@@ -48,6 +66,11 @@ const Navbar = () => {
 
           {/* Navbar End (Auth Buttons) */}
           <div className="navbar-end flex items-center gap-3">
+            <Link to='/dashboard/cart'>
+              <button className="btn bg-white text-black">
+                <FaCartPlus /> <div className="badge badge-sm badge-secondary">+{cart.length}</div>
+              </button>
+            </Link>
             {user ? (
               <div className="dropdown dropdown-end">
                 <button tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -64,17 +87,23 @@ const Navbar = () => {
                     </div>
                     <div>
                       <p className="text-lg font-semibold text-black">{user?.displayName || 'User'}</p>
-                      {/* <p className="text-sm text-gray-500">{user?.email}</p> */}
+                      <p className="text-sm text-gray-500">{user?.email}</p>
                     </div>
                   </div>
                   <li><a className="text-black">Profile</a></li>
                   <li ><a className="text-black"> <Link to='/dashboard'> Dashboard  </Link> </a></li>
                   <li><a className="text-black">Settings</a></li>
-                  <li>
-                    <button onClick={handleLogout} className="w-full bg-red-500 text-white py-2 rounded mt-2 hover:bg-red-600 ">
+
+                  <li className="w-full py-2 bg-red-500 text-white rounded hover:bg-red-600 text-center">
+                    <button
+                      onClick={handleLogout}
+
+                    >
                       Logout
                     </button>
                   </li>
+
+
                 </ul>
               </div>
             ) : (

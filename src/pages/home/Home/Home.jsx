@@ -8,6 +8,8 @@ import Featured from '../featured/Featured';
 import Testimonials from '../testimonials/testimonials';
 import Team from '../team/Team';
 import HelmetTittle from '../../shared/Helmet/HelmetTittle';
+import Frequently from '../frequently/Frequently';
+import News from '../../../components/cards/news/News';
 
 const Home = () => {
     return (
@@ -26,6 +28,8 @@ const Home = () => {
             <OfferPage></OfferPage>
             <Recommends></Recommends>
             <Featured></Featured>
+            <Frequently></Frequently>
+            <News></News>
             <Testimonials></Testimonials>
             <Team></Team>
         </div>
