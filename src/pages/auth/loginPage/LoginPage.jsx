@@ -9,6 +9,7 @@ import loginBgImg from '../../../assets/others/loginBgImg/authentication.png';
 import './LOginPage.css';
 import { AuthContext } from '../../../provider/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialMediaLogin from '../socialLoginPage/SocialMediaLogin';
 
 export default function LoginPage() {
     const { signIn } = useContext(AuthContext);
@@ -49,6 +50,7 @@ export default function LoginPage() {
         if (Object.keys(validationErrors).length === 0) {
             signIn(data.email, data.password)
                 .then(result => {
+                    console.log(result)
                     Swal.fire({
                         title: "User login successfully",
                         icon: "success",
@@ -82,7 +84,7 @@ export default function LoginPage() {
                 {/* Login Form */}
                 <div className="card-body card w-96 shadow-xl p-6 rounded-2xl bg-white">
                     <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
-
+                    <SocialMediaLogin></SocialMediaLogin>
                     <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
                         {/* Email */}
                         <div className="mb-4">

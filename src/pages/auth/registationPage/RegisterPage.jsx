@@ -1,4 +1,3 @@
-
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUser, FaPhone, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
@@ -8,44 +7,64 @@ import loginBgImg from "../../../assets/others/loginBgImg/authentication.png";
 import loginAnimation from "../../../assets/others/AnimationSignIn.json";
 import { AuthContext } from "../../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import UseAxiosSecure from "../../../hooks/useAxiosSecure/UseAxiosSecure";
+import SocialMediaLogin from "../socialLoginPage/SocialMediaLogin";
 
 export default function RegisterPage() {
     const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const axiosSecure = UseAxiosSecure()
+    const { createUser, updateUserProfile } = useContext(AuthContext);
 
-    const { createUser } = useContext(AuthContext);
-
-    // navigate 
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
     const onSubmit = (data) => {
-        console.log("Registration Data:", data);
-
-
-
-
-        // --- createUser for firebase authentication 
         createUser(data.email, data.password)
-            .then(result => {
-                console.log(result.user)
-                // alert("Account created successfully!");
-                Swal.fire({
-                    title: "Register successfully",
-                    icon: "success",
-                    confirmButtonText: "Continue"
-                }).then(() => {
-                    navigate(from, { replace: true });
-                });
+            .then((result) => {
+                const loggedUser = result.user;
 
+                // 1. Update Firebase profile
+                updateUserProfile(data.fullName)
+                    .then(() => {
+                        // 2. Prepare user object
+                        const saveUser = {
+                            uid: loggedUser.uid,
+                            fullName: data.fullName,
+                            phone: data.phone,
+                            email: data.email,
+                            createdAt: new Date(),
+                            role: "user"
+                        };
+
+                        // 3. Save to database using axios
+                        axiosSecure.post('/users', saveUser)
+
+                            .then(() => {
+                                Swal.fire({
+                                    title: "Registered successfully!",
+                                    icon: "success",
+                                    confirmButtonText: "Continue",
+                                }).then(() => {
+                                    navigate(from, { replace: true });
+                                });
+                            });
+                    });
             })
-            .catch(error => {
-                console.log(error.message)
-            })
+            .catch((error) => {
+                console.log("Registration Error:", error.message);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: error.message,
+                });
+            });
+
         reset();
     };
+
 
     const passwordValue = watch("password");
 
@@ -55,13 +74,17 @@ export default function RegisterPage() {
             style={{ backgroundImage: `url(${loginBgImg})` }}
         >
             <div className="flex flex-col md:flex-row items-center gap-8">
+                {/* Animation */}
                 <div className="hidden md:block w-80">
                     <Lottie animationData={loginAnimation} />
                 </div>
 
+                {/* Form Card */}
                 <div className="card w-96 shadow-xl p-6 rounded-2xl bg-white">
+                    <h2 className="text-2xl font-semibold text-center mb-4">Create Account</h2>
+                    <SocialMediaLogin></SocialMediaLogin>
                     <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
-                        <h2 className="text-2xl font-semibold text-center mb-4">Create Account</h2>
+
 
                         {/* Full Name */}
                         <div className="mb-3">
@@ -69,7 +92,10 @@ export default function RegisterPage() {
                             <div className="flex items-center border rounded-lg px-3 bg-gray-50">
                                 <FaUser className="text-black mr-2" />
                                 <input
-                                    {...register("fullName", { required: "Full Name is required", minLength: { value: 3, message: "At least 3 characters" } })}
+                                    {...register("fullName", {
+                                        required: "Full Name is required",
+                                        minLength: { value: 3, message: "At least 3 characters" },
+                                    })}
                                     placeholder="Enter your full name"
                                     className="input input-bordered w-full bg-transparent focus:outline-none"
                                 />
@@ -85,7 +111,10 @@ export default function RegisterPage() {
                                 <input
                                     {...register("phone", {
                                         required: "Phone number is required",
-                                        pattern: { value: /^\+?\d{10,15}$/, message: "Invalid phone number" }
+                                        pattern: {
+                                            value: /^\+?\d{10,15}$/,
+                                            message: "Invalid phone number",
+                                        },
                                     })}
                                     placeholder="Enter your phone number"
                                     className="input input-bordered w-full bg-transparent focus:outline-none"
@@ -102,7 +131,10 @@ export default function RegisterPage() {
                                 <input
                                     {...register("email", {
                                         required: "Email is required",
-                                        pattern: { value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Invalid email format" }
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                            message: "Invalid email format",
+                                        },
                                     })}
                                     placeholder="Enter your email"
                                     className="input input-bordered w-full bg-transparent focus:outline-none"
@@ -120,7 +152,10 @@ export default function RegisterPage() {
                                     type={showPassword ? "text" : "password"}
                                     {...register("password", {
                                         required: "Password is required",
-                                        pattern: { value: /^(?=.*[A-Z])(?=.*\d).{8,}$/, message: "At least 8 characters, one uppercase & one number" }
+                                        pattern: {
+                                            value: /^(?=.*[A-Z])(?=.*\d).{8,}$/,
+                                            message: "At least 8 characters, one uppercase & one number",
+                                        },
                                     })}
                                     placeholder="Enter your password"
                                     className="input input-bordered w-full bg-transparent focus:outline-none"
@@ -141,7 +176,7 @@ export default function RegisterPage() {
                                     type={showConfirmPassword ? "text" : "password"}
                                     {...register("confirmPassword", {
                                         required: "Please confirm your password",
-                                        validate: (value) => value === passwordValue || "Passwords do not match"
+                                        validate: (value) => value === passwordValue || "Passwords do not match",
                                     })}
                                     placeholder="Re-enter your password"
                                     className="input input-bordered w-full bg-transparent focus:outline-none"
@@ -150,15 +185,25 @@ export default function RegisterPage() {
                                     {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
-                            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>}
+                            {errors.confirmPassword && (
+                                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
+                            )}
                         </div>
 
-                        <button type="submit" className="w-full px-4 py-2 rounded-lg text-white font-semibold bg-blue-700 hover:bg-blue-800 transition duration-300 mb-3">
+                        {/* Submit Button */}
+                        <button
+                            type="submit"
+                            className="w-full px-4 py-2 rounded-lg text-white font-semibold bg-blue-700 hover:bg-blue-800 transition duration-300 mb-3"
+                        >
                             Create Account
                         </button>
 
+                        {/* Switch to Login */}
                         <Link to="/login">
-                            <button type="button" className="w-full px-4 py-2 rounded-lg text-white font-semibold bg-green-700 hover:bg-green-800 transition duration-300">
+                            <button
+                                type="button"
+                                className="w-full px-4 py-2 rounded-lg text-white font-semibold bg-green-700 hover:bg-green-800 transition duration-300"
+                            >
                                 Have an account? Login
                             </button>
                         </Link>
@@ -168,7 +213,6 @@ export default function RegisterPage() {
         </div>
     );
 }
-
 
 
 

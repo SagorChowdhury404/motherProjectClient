@@ -86,8 +86,8 @@ const Navbar = () => {
                       </div>
                     </div>
                     <div>
-                      <p className="text-lg font-semibold text-black">{user?.displayName || 'User'}</p>
-                      <p className="text-sm text-gray-500">{user?.email}</p>
+                      <p className="text-lg font-semibold text-black">{user?.displayName || 'Mr. Sagy'}</p>
+                      {/* <p className="text-sm text-gray-500">{user?.email}</p> */}
                     </div>
                   </div>
                   <li><a className="text-black">Profile</a></li>
