@@ -1,6 +1,8 @@
 import React from 'react';
 
+
 const SectionTitle = ({ heading, subHeading }) => {
+
   return (
     <div className="text-center my-6 space-y-2">
       {subHeading && (

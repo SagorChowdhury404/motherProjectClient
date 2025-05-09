@@ -14,14 +14,30 @@ import {
 } from 'react-icons/fa';
 import UseCart from '../../hooks/useCart/UseCart';
 import { FaPaypal, FaShop } from 'react-icons/fa6';
-import UseAdmin from '../../hooks/UseAdmin';
+
 import LoadingPage from '../../pages/shared/loadingPage/loadingPage';
+// import UseAdmin from '../../hooks/useAdmin/UseAdmin';
+import useAuth from '../../hooks/useAuth/useAuth';
+import useAdmin from '../../hooks/useAdmin/useAdmin/useAdmin';
 
 const DashboardLayout = () => {
   const [cart] = UseCart();
-  
+  const { logOut } = useAuth();
+  const handleLogout = () => {
+    console.log('logout')
+    logOut()
+      .then(() => {
+        console.log("User logged out");
+        // Optionally redirect or toast
+      })
+      .catch(error => {
+        console.error("Logout error:", error);
+      });
+  };
   // const isAdmin = true;
-  const { isAdmin, isLoading } = UseAdmin();
+  // const isAdmin = true;
+  // const isAdmin = true;
+  const { isAdmin, isLoading } = useAdmin();
 
   if (isLoading) {
     return <LoadingPage />;
@@ -36,74 +52,76 @@ const DashboardLayout = () => {
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar - Responsive */}
-      <div className="w-full md:w-64 bg-white shadow-lg">
+      <div className=" w-full md:w-64 bg-white shadow-lg">
 
 
         <ul className="grid grid-cols-2 sm:grid-cols-2 md:flex md:flex-col p-4 gap-2 text-sm">
 
           {
-            isAdmin ? <>
+            isAdmin ?
+              <>
 
-              <li>
-                <NavLink to="/dashboard/AdminHome" className={navLinkClass}>
-                  <FaHome /> <span>Admin Home</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/reservation" className={navLinkClass}>
-                  <FaUtensils /> <span>Add ITEMS</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/cart" className={navLinkClass}>
-                  <FaShoppingCart /> <span>Manage Items({cart.length})</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/payment" className={navLinkClass}>
-                  <TbBrandBooking /> <span>Manage Booking </span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/allUser" className={navLinkClass}>
-                  <FaUser /> <span>All User</span>
-                </NavLink>
-              </li>
+                <li>
+                  <NavLink to="/dashboard/AdminHome" className={navLinkClass}>
+                    <FaHome /> <span>Admin Home</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/addItems" className={navLinkClass}>
+                    <FaUtensils /> <span>Add ITEMS</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/manageItems" className={navLinkClass}>
+                    <FaShoppingCart /> <span>Manage Items</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/manageBooking" className={navLinkClass}>
+                    <TbBrandBooking /> <span>Manage Booking </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/allUser" className={navLinkClass}>
+                    <FaUser /> <span>All User</span>
+                  </NavLink>
+                </li>
 
-            </> : <>
+              </> :
+              <>
 
-              <li>
-                <NavLink to="/dashboard/userHome" className={navLinkClass}>
-                  <FaHome /> <span>User Home</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/reservation" className={navLinkClass}>
-                  <FaCalendar /> <span>Reservation</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/cart" className={navLinkClass}>
-                  <FaShoppingCart /> <span>My Cart ({cart.length})</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/payment" className={navLinkClass}>
-                  <FaPaypal /> <span>Payment history </span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/review" className={navLinkClass}>
-                  <FaAd /> <span>Add a Review</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/bookings" className={navLinkClass}>
-                  <FaList /> <span>My Bookings</span>
-                </NavLink>
-              </li>
+                <li>
+                  <NavLink to="/dashboard/userHome" className={navLinkClass}>
+                    <FaHome /> <span>User Home</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/reservation" className={navLinkClass}>
+                    <FaCalendar /> <span>Reservation</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/cart" className={navLinkClass}>
+                    <FaShoppingCart /> <span>My Cart ({cart.length})</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/paymentHistory" className={navLinkClass}>
+                    <FaPaypal /> <span>Payment history </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/review" className={navLinkClass}>
+                    <FaAd /> <span>Add a Review</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/bookings" className={navLinkClass}>
+                    <FaList /> <span>My Bookings</span>
+                  </NavLink>
+                </li>
 
-            </>
+              </>
           }
 
 
@@ -132,6 +150,14 @@ const DashboardLayout = () => {
             <NavLink to="/contact" className={navLinkClass}>
               <MdContactPhone /> <span>Contact</span>
             </NavLink>
+          </li>
+          <li className="w-full py-2 bg-red-500 text-white rounded hover:bg-red-600 text-center">
+            <button
+              onClick={handleLogout}
+
+            >
+              Logout
+            </button>
           </li>
         </ul>
       </div>

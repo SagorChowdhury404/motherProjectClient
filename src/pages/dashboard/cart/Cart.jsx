@@ -3,7 +3,10 @@ import UseCart from '../../../hooks/useCart/UseCart';
 import { FaTrashAlt } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import UseAxiosSecure from '../../../hooks/useAxiosSecure/UseAxiosSecure';
-const AxiosSecure = UseAxiosSecure()
+import { Link } from 'react-router-dom';
+const AxiosSecure = UseAxiosSecure();
+
+
 const Cart = () => {
     const [cart, refetch] = UseCart();
     const totalPrice = cart.reduce((total, item) => total + item.price, 0);
@@ -34,15 +37,23 @@ const Cart = () => {
         });
     };
 
+
     return (
         <div className="lg:px-8 py-6">
             {/* Header with total and pay */}
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-blue-600 text-white py-5 px-6 rounded-xl shadow-md">
                 <h2 className="text-2xl md:text-3xl font-semibold">Items: {cart.length}</h2>
                 <h2 className="text-2xl md:text-3xl font-semibold">Total: ${formattedTotalPrice}</h2>
-                <button className="btn bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-black font-semibold px-6 py-2 rounded-md transition duration-300">
-                    Pay Now
-                </button>
+                {
+                    cart.length ? <Link to='/dashboard/payment'>
+                        <button className="btn bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-black font-semibold px-6 py-2 rounded-md transition duration-300">
+                            Pay Now
+                        </button>
+
+                    </Link> : <button className="btn bg-yellow-400 hover:bg-yellow-500 active:bg-yellow-600 text-black font-semibold px-6 py-2 rounded-md transition duration-300">
+                        Pay Now
+                    </button>
+                }
             </div>
 
             {/* Table Section */}

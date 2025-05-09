@@ -1,7 +1,8 @@
 // import React, { useEffect, useState } from 'react';
 import SectionTitle from '../../shared/sectionTittle/SectionTittle';
-import UseMenu from '../../../hooks/useMenu/UseMenu';
+// import UseMenu from '../../../hooks/useMenu/UseMenu';
 import MapItems from '../../shared/mapingItems/MapItems';
+import UseMenu from '../../../hooks/useMenu/UseMenu';
 
 const Recommends = () => {
   const [Recommends] = UseMenu()

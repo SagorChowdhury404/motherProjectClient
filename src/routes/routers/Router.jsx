@@ -7,12 +7,20 @@ import Contact from "../../pages/Contact/Contact";
 import LoginPage from "../../pages/auth/loginPage/LoginPage";
 import RegisterPage from "../../pages/auth/registationPage/RegisterPage";
 import PrivetRouter from "../privetRouter/PrivetRouter";
-import UseCart from "../../hooks/useCart/UseCart";
 import DashboardLayout from "../../layouts/DashboardLayout/DashboardLayout";
 import Cart from "../../pages/dashboard/cart/Cart";
 import AllUser from "../../dashboard/Alluser/Alluser";
 import ManageItems from "../../dashboard/ManageItems/ManageItems";
 import AdminHome from "../../dashboard/AdminHome/AdminHome";
+import AddItem from "../../dashboard/AddITEMS/AddItem";
+import ManageBooking from "../../dashboard/manageBooking/ManageBooking";
+import UserHome from "../../dashboard/UserDashboard/userHome/UserHome";
+import Payment from "../../dashboard/UserDashboard/payment/Payment";
+import Review from "../../dashboard/UserDashboard/review/Review";
+import Bookings from "../../dashboard/UserDashboard/bookings/Bookings";
+import AdminRoutes from "../adminRoutes/AdminRoutes";
+import UpdateItems from "../../dashboard/updateItems/UpdateItems";
+import PaymentHistory from "../../dashboard/UserDashboard/paymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
     {
@@ -52,6 +60,7 @@ export const router = createBrowserRouter([
 
         ]
     },
+    //////////// todo for Admin dashboard/////////////////
     {
         path: "/dashboard",
         element: <PrivetRouter>
@@ -59,26 +68,65 @@ export const router = createBrowserRouter([
         </PrivetRouter>,
         children: [
             {
+                path: 'AdminHome',
+                element: <AdminRoutes><AdminHome></AdminHome></AdminRoutes>
+            },
+            {
+                path: 'addItems',
+                element: <AdminRoutes><AddItem></AddItem></AdminRoutes>
+            },
+            {
+                path: 'manageItems',
+                element: <AdminRoutes><ManageItems></ManageItems></AdminRoutes>,
+            },
+            {
+                path: 'updateItems/:id',
+                element: <AdminRoutes><UpdateItems /></AdminRoutes>,
+                loader: ({ params }) => fetch(`http://localhost:5000/updateItems/${params.id}`),
+            
+            }
+            ,
+            {
+                path: 'manageBooking',
+                element: <AdminRoutes><ManageBooking></ManageBooking></AdminRoutes>
+            },
+
+            {
+                path: 'allUser',
+                element: <AdminRoutes><AllUser></AllUser></AdminRoutes>
+            },
+
+            //////////// todo for user dashboard/////////////////
+
+            //UseCart ,userHome ,reservation ,cart,payment,review,bookings
+            {
+                path: 'userHome',
+                element: <UserHome></UserHome>
+            },
+            {
+                path: 'reservation',
+                element: <UserHome></UserHome>
+            },
+            {
                 path: 'cart',
                 element: <Cart></Cart>
             },
             {
-                path: 'allUser',
-                element: <AllUser></AllUser>
+                path: 'payment',
+                element: <Payment></Payment>
             },
             {
-                path: 'cart',
-                element: <ManageItems></ManageItems>
+                path: 'paymentHistory',
+                element: <PaymentHistory></PaymentHistory>
             },
             {
-                path: 'AdminHome',
-                element: <AdminHome></AdminHome>
+                path: 'review',
+                element: <Review></Review>
             },
             {
-                path: 'cart',
-                element: <ManageItems></ManageItems>
+                path: 'bookings',
+                element: <Bookings></Bookings>
             },
-
         ]
     }
 ]);

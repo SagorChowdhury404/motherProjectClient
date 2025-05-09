@@ -14,9 +14,7 @@ const AllUser = () => {
             
             return res.data;
         }
-
     })
-
 
     const handleDelateUser = (id) => {
         Swal.fire({
@@ -43,7 +41,6 @@ const AllUser = () => {
         });
     }
 
-
     const handleChangeRole = (user) => {
         Swal.fire({
             title: "Are you sure?",
@@ -66,8 +63,6 @@ const AllUser = () => {
                         });
                     }
                 });
-
-
 
             }
         });
